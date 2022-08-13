@@ -1,0 +1,12 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Application/BackendAPI/PlaneSpottersApi/PlaneSpotters.Api/bin/Debug/net6.0
+/Application/BackendAPI/PlaneSpottersApi/.vs
+/Application/BackendAPI/PlaneSpottersApi/PlaneSpotters.Api/obj
+/Application/BackendAPI/PlaneSpottersApi/PlaneSpotters.Core/bin/Debug
+/Application/BackendAPI/PlaneSpottersApi/PlaneSpotters.Core/Migrations
+/Application/BackendAPI/PlaneSpottersApi/PlaneSpotters.Core/obj
+/Application/BackendAPI/PlaneSpottersApi/PlaneSpottersApi/bin/Debug/netcoreapp3.1
+/Application/BackendAPI/PlaneSpottersApi/PlaneSpottersApi/obj
