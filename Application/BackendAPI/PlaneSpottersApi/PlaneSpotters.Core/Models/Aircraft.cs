@@ -15,15 +15,16 @@ namespace PlaneSpotters.Core.Models
 
         [Required(ErrorMessage = "Required field.")]
         [DataType(DataType.Text)]
-        [StringLength(128 , ErrorMessage = "Allow 128 characters only.")]
+        [StringLength(128, ErrorMessage = "Allow 128 characters only.")]
         public string Make { get; set; }
 
         [Required(ErrorMessage = "Required field.")]
-        [StringLength(128 ,ErrorMessage = "Allow 128 characters only.")]
+        [StringLength(128, ErrorMessage = "Allow 128 characters only.")]
         [DataType(DataType.Text)]
         public string Model { get; set; }
 
         [Required(ErrorMessage = "Required field.")]
+        [RegularExpression(@"[a-zA-Z]{1,2}-[a-zA-Z]{1,5}", ErrorMessage = "Invalid Entry.")]
         [DataType(DataType.Text)]
         public string Registration { get; set; }
 
@@ -36,6 +37,10 @@ namespace PlaneSpotters.Core.Models
         [DataType(DataType.Date)]
         public DateTime DateTime { get; set; }
 
-        public byte[] Image { get; set; }
+        [DataType(DataType.ImageUrl)]
+        public string Image { get; set; }
+
+        
+        public bool Sighting { get; set; }
     }
 }

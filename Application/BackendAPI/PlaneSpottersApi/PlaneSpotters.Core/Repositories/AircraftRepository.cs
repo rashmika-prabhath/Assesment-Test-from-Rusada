@@ -65,6 +65,7 @@ namespace PlaneSpotters.Core.Repositories
             dbEntity.Location = entity.Location;
             dbEntity.DateTime = entity.DateTime;
             dbEntity.Image = entity.Image;
+            dbEntity.Sighting = entity.Sighting;
             aircraftContext.SaveChanges();
             return aircraftContext.Aircrafts.FirstOrDefault(e => e.Id == entity.Id);
         }
