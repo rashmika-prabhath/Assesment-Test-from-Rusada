@@ -18,9 +18,19 @@ namespace PlaneSpotters.Core.Services
             return (Aircraft)_aircraftRepository.CreateAircraft(aircraft);
         }
 
+        public AirCraftSpot CreateAircraftSpot(AirCraftSpot aircraftSpot)
+        {
+            return (AirCraftSpot)_aircraftRepository.CreateAircraftSpot(aircraftSpot);
+        }
+
         public bool DeleteAircraft(int Id)
         {
             return (_aircraftRepository.DeleteAircraft(Id));
+        }
+
+        public bool DeleteAircraftSpot(int Id)
+        {
+            return (_aircraftRepository.DeleteAircraftSpot(Id));
         }
 
         public Aircraft EditAircraft(Aircraft aircraft, long Id)
@@ -36,6 +46,11 @@ namespace PlaneSpotters.Core.Services
         public IEnumerable<Aircraft> FetchAircrafts()
         {
             return _aircraftRepository.FetchAircrafts();
+        }
+
+        public IEnumerable<AirCraftSpot> FetchAircraftSpots(int AircraftId)
+        {
+            return _aircraftRepository.FetchAircraftSpots();
         }
     }
 }

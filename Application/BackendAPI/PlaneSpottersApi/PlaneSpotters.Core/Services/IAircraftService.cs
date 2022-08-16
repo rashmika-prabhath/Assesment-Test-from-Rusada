@@ -12,5 +12,11 @@ namespace PlaneSpotters.Core.Services
         public Aircraft CreateAircraft(Aircraft aircraft);
         public Aircraft EditAircraft(Aircraft aircraft, long Id);
         public bool DeleteAircraft(int Id);
+
+
+
+        public IEnumerable<AirCraftSpot> FetchAircraftSpots(int AircraftId);
+        public AirCraftSpot CreateAircraftSpot(AirCraftSpot aircraftSpot);
+        public bool DeleteAircraftSpot(int Id);
     }
 }

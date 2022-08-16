@@ -10,3 +10,5 @@
 /Application/BackendAPI/PlaneSpottersApi/PlaneSpotters.Core/obj
 /Application/BackendAPI/PlaneSpottersApi/PlaneSpottersApi/bin/Debug/netcoreapp3.1
 /Application/BackendAPI/PlaneSpottersApi/PlaneSpottersApi/obj
+/Application/BackendAPI/PlaneSpottersApi/PlaneSpotters.Api/bin/Release/net6.0
+/Application/BackendAPI/PlaneSpottersApi/PlaneSpotters.Core/bin/Release/net6.0

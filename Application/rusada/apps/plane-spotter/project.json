@@ -1,0 +1,62 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/plane-spotter",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "root": "apps/plane-spotter",
+        "outputPath": "dist/apps/plane-spotter"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "apps/plane-spotter"
+        },
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "plane-spotter:build",
+        "dev": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "plane-spotter:build:development",
+          "dev": true
+        },
+        "production": {
+          "buildTarget": "plane-spotter:build:production",
+          "dev": false
+        }
+      }
+    },
+    "export": {
+      "executor": "@nrwl/next:export",
+      "options": {
+        "buildTarget": "plane-spotter:build:production"
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/plane-spotter"],
+      "options": {
+        "jestConfig": "apps/plane-spotter/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/plane-spotter/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  },
+  "tags": []
+}

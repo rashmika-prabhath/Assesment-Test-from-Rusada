@@ -15,6 +15,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace PlaneSpotters.Api
 {
@@ -26,6 +30,7 @@ namespace PlaneSpotters.Api
         }
 
         public IConfiguration Configuration { get; }
+        string MyAllowSpecificOrigins = "myAllowSpecificOrigins";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -37,7 +42,26 @@ namespace PlaneSpotters.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
-            services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  policy =>
+                                  {
+                                      policy.WithOrigins("http://localhost:4200")
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod();
+                                  });
+            });
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            services.Configure<FormOptions>(o =>
+            {
+                o.ValueLengthLimit = int.MaxValue;
+                o.MultipartBodyLengthLimit = int.MaxValue;
+                o.MemoryBufferThreshold = int.MaxValue;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +83,7 @@ namespace PlaneSpotters.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthorization();
 
@@ -66,6 +91,8 @@ namespace PlaneSpotters.Api
             {
                 endpoints.MapControllers();
             });
+
+            app.UseStaticFiles();
         }
     }
 }

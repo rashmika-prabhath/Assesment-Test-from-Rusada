@@ -1,4 +1,5 @@
-﻿using PlaneSpotters.Core.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using PlaneSpotters.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,9 +46,15 @@ namespace PlaneSpotters.Core.Repositories
                   .FirstOrDefault(e => e.Id == id);
         }
 
+        public AirCraftSpot GetSpot(long id)
+        {
+            return aircraftContext.AirCraftSpots
+                  .FirstOrDefault(e => e.Id == id);
+        }
+
         public IEnumerable<Aircraft> GetAll()
         {
-           return aircraftContext.Aircrafts.ToList();
+           return aircraftContext.Aircrafts.Include(a => a.AirCraftSpots).ToList();
         }
 
         public Aircraft Add(Aircraft entity)
@@ -57,15 +64,21 @@ namespace PlaneSpotters.Core.Repositories
             return entity;
         }
 
+        public AirCraftSpot AddSpot(AirCraftSpot entity)
+        {
+            aircraftContext.AirCraftSpots.Add(entity);
+            aircraftContext.SaveChanges();
+            return entity;
+        }
+
         public Aircraft Update(Aircraft dbEntity, Aircraft entity)
         {
             dbEntity.Make = entity.Make;
             dbEntity.Model = entity.Model;
             dbEntity.Registration = entity.Registration;
-            dbEntity.Location = entity.Location;
-            dbEntity.DateTime = entity.DateTime;
             dbEntity.Image = entity.Image;
             dbEntity.Sighting = entity.Sighting;
+            aircraftContext.Update(dbEntity);
             aircraftContext.SaveChanges();
             return aircraftContext.Aircrafts.FirstOrDefault(e => e.Id == entity.Id);
         }
@@ -75,6 +88,23 @@ namespace PlaneSpotters.Core.Repositories
             aircraftContext.Aircrafts.Remove(this.Get(id));
             aircraftContext.SaveChanges();
             return true;
+        }
+
+        public AirCraftSpot CreateAircraftSpot(AirCraftSpot aircraftSpot)
+        {
+            return this.AddSpot(aircraftSpot);
+        }
+
+        public bool DeleteAircraftSpot(int id)
+        {
+            aircraftContext.AirCraftSpots.Remove(this.GetSpot(id));
+            aircraftContext.SaveChanges();
+            return true;
+        }
+
+        public IEnumerable<AirCraftSpot> FetchAircraftSpots()
+        {
+            return aircraftContext.AirCraftSpots.Include(a => a.Aircraft).ToList();
         }
     }
 }
