@@ -41,7 +41,7 @@ export default function AircraftRegistration({ airCraftId = 0 }) {
                 })
                 .then(({ data }) => {
                     console.log("res", data);
-                    Swal.fire("Succussfully saved!", '', 'success')
+                    Swal.fire("Successfully saved!", '', 'success')
                     router.push("/dashboard")
                 })
                 .catch(err => {
@@ -73,8 +73,6 @@ export default function AircraftRegistration({ airCraftId = 0 }) {
             make: data?.make || '',
             model: data?.model || '',
             registration: data?.registration || '',
-            dateTime: data?.dateTime || new Date(),
-            location: data?.location || '',
             image: `img/aircrafts/${data?.image}` || undefined,
             sighting: data?.sighting || true,
         };
@@ -89,7 +87,7 @@ export default function AircraftRegistration({ airCraftId = 0 }) {
             // location: Yup.string().required("Location is required")
             //     .max(128, 'Allow 255 characters only.'),
             registration: Yup.string().matches(/[a-zA-Z]{1,2}-[a-zA-Z]{1,5}/, 'Invalid Entry.')
-            //     .required("Registration is required"),
+                .required("Registration is required"),
             // dateTime: Yup.date().max(new Date(), "Must be a Date & Time in the past")
         });
     };

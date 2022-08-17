@@ -13,6 +13,7 @@ import {
   GridRowsProp,
   GridActionsCellItem,
 } from '@mui/x-data-grid-pro';
+import moment from 'moment';
 
 const deleteRow = (id) => {
   Swal.fire({
@@ -62,8 +63,12 @@ const columns: GridColDef[] = [
     valueGetter: (params: GridValueGetterParams) =>
       `${params.row.aircraft.registration || ''}`,
   },
-  { field: 'location', headerName: 'Location', width: 400 },
-  { field: 'dateTime', headerName: 'Date & time', width: 300 },
+  { field: 'location', headerName: 'Location', width: 300 },
+  {
+    field: 'dateTime', headerName: 'Date & time', width: 300,
+    valueGetter: (params: GridValueGetterParams) =>
+      `${moment(params.row.dateTime).format('DD/MM/yyyy HH:mm') || ''}`,
+  },
   {
     field: 'actions',
     type: 'actions',
@@ -95,7 +100,11 @@ export const ListView = () => {
       <div className="container">
         <Grid container spacing={1} justifyContent="center">
           <div style={{ height: 400, width: '100%' }}>
-            <Box><h3>Aircraft Spotting List</h3> <Button onClick={e => router.push('/dashboard')}>Go to Dashboard</Button></Box>
+            <Box>
+              <h3>Aircraft Spotting List</h3>
+              <Button onClick={e => router.push('/dashboard')}>Go to Dashboard</Button>
+              <Button onClick={e => router.push(`/aircraft/add_spot?airCraftId=${router?.query?.id}`)}>Go to Create</Button>
+            </Box>
             <DataGrid
               rows={aircraftSpots}
               columns={columns}
