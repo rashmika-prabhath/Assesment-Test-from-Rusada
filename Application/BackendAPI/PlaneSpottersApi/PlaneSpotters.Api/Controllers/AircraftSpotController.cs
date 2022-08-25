@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using PlaneSpotters.Core.Models;
 using PlaneSpotters.Core.Services;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,24 +22,39 @@ namespace PlaneSpotters.Api.Controllers
         }
 
         // GET api/<AircraftSpotController>/5
+        /// <summary>
+        /// Gets the asynchronous.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
-        public IEnumerable<AirCraftSpot> Get(int id)
+        public async Task<IEnumerable<AirCraftSpot>> GetAsync(int id)
         {
-            return _aircraftService.FetchAircraftSpots(id);
+            return await _aircraftService.FetchAircraftSpotsAsync(id);
         }
 
         // POST api/<AircraftSpotController>
+        /// <summary>
+        /// Posts the asynchronous.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
         [HttpPost]
-        public AirCraftSpot Post([FromBody] AirCraftSpot value)
+        public async Task<AirCraftSpot> PostAsync([FromBody] AirCraftSpot value)
         {
-            return _aircraftService.CreateAircraftSpot(value);
+            return await _aircraftService.CreateAircraftSpotAsync(value);
         }
 
         // DELETE api/<AircraftSpotController>/5
+        /// <summary>
+        /// Deletes the asynchronous.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
-        public bool Delete(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            return _aircraftService.DeleteAircraftSpot(id);
+            return await _aircraftService.DeleteAircraftSpot(id);
         }
     }
 }

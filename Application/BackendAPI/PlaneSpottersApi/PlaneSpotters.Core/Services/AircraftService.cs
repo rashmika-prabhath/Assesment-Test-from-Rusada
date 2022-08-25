@@ -3,9 +3,14 @@ using PlaneSpotters.Core.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PlaneSpotters.Core.Services
 {
+    /// <summary>
+    /// AircraftService
+    /// </summary>
+    /// <seealso cref="PlaneSpotters.Core.Services.IAircraftService" />
     public class AircraftService : IAircraftService
     {
         private readonly IAircraftRepository _aircraftRepository;
@@ -13,44 +18,84 @@ namespace PlaneSpotters.Core.Services
         {
             _aircraftRepository = aircraftRepository;
         }
-        public Aircraft CreateAircraft(Aircraft aircraft)
+        /// <summary>
+        /// Creates the aircraft.
+        /// </summary>
+        /// <param name="aircraft">The aircraft.</param>
+        /// <returns></returns>
+        public async Task<Aircraft> CreateAircraft(Aircraft aircraft)
         {
-            return (Aircraft)_aircraftRepository.CreateAircraft(aircraft);
+            return (Aircraft)await _aircraftRepository.CreateAircraftAsync(aircraft);
         }
 
-        public AirCraftSpot CreateAircraftSpot(AirCraftSpot aircraftSpot)
+        /// <summary>
+        /// Creates the aircraft spot asynchronous.
+        /// </summary>
+        /// <param name="aircraftSpot">The aircraft spot.</param>
+        /// <returns></returns>
+        public async Task<AirCraftSpot> CreateAircraftSpotAsync(AirCraftSpot aircraftSpot)
         {
-            return (AirCraftSpot)_aircraftRepository.CreateAircraftSpot(aircraftSpot);
+            return (AirCraftSpot)await _aircraftRepository.CreateAircraftSpotAsync(aircraftSpot);
         }
 
-        public bool DeleteAircraft(int Id)
+        /// <summary>
+        /// Deletes the aircraft.
+        /// </summary>
+        /// <param name="Id">The identifier.</param>
+        /// <returns></returns>
+        public async Task<bool> DeleteAircraft(int Id)
         {
-            return (_aircraftRepository.DeleteAircraft(Id));
+            return await (_aircraftRepository.DeleteAircraftAsync(Id));
         }
 
-        public bool DeleteAircraftSpot(int Id)
+        /// <summary>
+        /// Deletes the aircraft spot.
+        /// </summary>
+        /// <param name="Id">The identifier.</param>
+        /// <returns></returns>
+        public async Task<bool> DeleteAircraftSpot(int Id)
         {
-            return (_aircraftRepository.DeleteAircraftSpot(Id));
+            return await (_aircraftRepository.DeleteAircraftSpotAsync(Id));
         }
 
-        public Aircraft EditAircraft(Aircraft aircraft, long Id)
+        /// <summary>
+        /// Edits the aircraft asynchronous.
+        /// </summary>
+        /// <param name="aircraft">The aircraft.</param>
+        /// <param name="Id">The identifier.</param>
+        /// <returns></returns>
+        public async Task<Aircraft> EditAircraftAsync(Aircraft aircraft, long Id)
         {
-            return (Aircraft)_aircraftRepository.EditAircraft(aircraft, Id);
+            return (Aircraft)await _aircraftRepository.EditAircraftAsync(aircraft, Id);
         }
 
-        public Aircraft FetchAircraft(int Id)
+        /// <summary>
+        /// Fetches the aircraft asynchronous.
+        /// </summary>
+        /// <param name="Id">The identifier.</param>
+        /// <returns></returns>
+        public async Task<Aircraft> FetchAircraftAsync(int Id)
         {
-            return _aircraftRepository.FetchAircraft(Id);
+            return await _aircraftRepository.FetchAircraftAsync(Id);
         }
 
-        public IEnumerable<Aircraft> FetchAircrafts()
+        /// <summary>
+        /// Fetches the aircrafts asynchronous.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Aircraft>> FetchAircraftsAsync()
         {
-            return _aircraftRepository.FetchAircrafts();
+            return await _aircraftRepository.FetchAircraftsAsync();
         }
 
-        public IEnumerable<AirCraftSpot> FetchAircraftSpots(int AircraftId)
+        /// <summary>
+        /// Fetches the aircraft spots asynchronous.
+        /// </summary>
+        /// <param name="AircraftId">The aircraft identifier.</param>
+        /// <returns></returns>
+        public async Task<IEnumerable<AirCraftSpot>> FetchAircraftSpotsAsync(int AircraftId)
         {
-            return _aircraftRepository.FetchAircraftSpots();
+            return await _aircraftRepository.FetchAircraftSpotsAsync();
         }
     }
 }

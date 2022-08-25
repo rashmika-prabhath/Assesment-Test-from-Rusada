@@ -6,11 +6,16 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace PlaneSpotters.Api.Controllers
 {
+    /// <summary>
+    /// AircraftController
+    /// </summary>
+    /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
     [Route("api/[controller]")]
     [ApiController]
     public class AircraftController : ControllerBase
@@ -24,22 +29,30 @@ namespace PlaneSpotters.Api.Controllers
         }
 
         // GET: api/<AircraftController>
+        /// <summary>
+        /// Gets the asynchronous.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public IEnumerable<Aircraft> Get()
+        public async Task<IEnumerable<Aircraft>> GetAsync()
         {
-            return _aircraftService.FetchAircrafts();
+            return await _aircraftService.FetchAircraftsAsync();
         }
 
         // GET api/<AircraftController>/5
         [HttpGet("{id}")]
-        public Aircraft Get(int id)
+        public async Task<Aircraft> GetAsync(int id)
         {
-            return _aircraftService.FetchAircraft(id);
+            return await _aircraftService.FetchAircraftAsync(id);
         }
 
         // POST api/<AircraftController>
+        /// <summary>
+        /// Posts the asynchronous.
+        /// </summary>
+        /// <returns></returns>
         [HttpPost, DisableRequestSizeLimit]
-        public Aircraft Post()
+        public async Task<Aircraft> PostAsync()
         {
             var file = Request.Form.Files[0];
             var folderName = Configuration["image_path"];
@@ -63,7 +76,7 @@ namespace PlaneSpotters.Api.Controllers
                     Image = fileName,
                     Sighting = Convert.ToBoolean(Request.Form["Sighting"]),
                 };
-                return _aircraftService.CreateAircraft(aircraft);
+                return await _aircraftService.CreateAircraft(aircraft);
             }
             else
             {
@@ -72,15 +85,26 @@ namespace PlaneSpotters.Api.Controllers
         }
 
         // PUT api/<AircraftController>/5
+        /// <summary>
+        /// Posts the asynchronous.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
-        public Aircraft Post(int id, [FromBody] Aircraft value)
+        public async Task<Aircraft> PostAsync(int id, [FromBody] Aircraft value)
         {
-            return _aircraftService.EditAircraft(value, id);
+            return await _aircraftService.EditAircraftAsync(value, id);
         }
 
         // POST api/<AircraftController>/5
+        /// <summary>
+        /// Posts the asynchronous.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         [HttpPost("{id}"), DisableRequestSizeLimit]
-        public Aircraft Post(int id)
+        public async Task<Aircraft> PostAsync(int id)
         {
             var file = Request.Form.Files[0];
             var folderName = Configuration["image_path"];
@@ -104,7 +128,7 @@ namespace PlaneSpotters.Api.Controllers
                     Image = fileName,
                     Sighting = Convert.ToBoolean(Request.Form["Sighting"]),
                 };
-                return _aircraftService.EditAircraft(aircraft, id);
+                return await _aircraftService.EditAircraftAsync(aircraft, id);
             }
             else
             {
@@ -113,12 +137,17 @@ namespace PlaneSpotters.Api.Controllers
         }
 
         // DELETE api/<AircraftController>/5
+        /// <summary>
+        /// Deletes the asynchronous.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
-        public IEnumerable<Aircraft> Delete(int id)
+        public async Task<IEnumerable<Aircraft>> DeleteAsync(int id)
         {
-            if (_aircraftService.DeleteAircraft(id))
+            if (await _aircraftService.DeleteAircraft(id))
             {
-                return _aircraftService.FetchAircrafts();
+                return await _aircraftService.FetchAircraftsAsync();
             }
             return null;
         }
